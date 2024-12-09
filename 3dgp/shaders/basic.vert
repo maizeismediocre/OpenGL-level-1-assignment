@@ -2,25 +2,72 @@
 
 #version 330
 
+
+// Matrices
+
 uniform mat4 matrixProjection;
+
+uniform mat4 matrixView;
+
 uniform mat4 matrixModelView;
-uniform vec3 material;
+
+
+// Materials
+
+uniform vec3 materialAmbient;
+
+uniform vec3 materialDiffuse;
+
+uniform vec3 materialSpecular;
+
+uniform float shininess;
+
 
 in vec3 aVertex;
+
 in vec3 aNormal;
+
 
 out vec4 color;
 
-void main(void) 
+vec4 position;
+
+vec3 normal;
+
+// Light declarations
+
+struct AMBIENT
+
 {
-  vec4 pos = matrixProjection * matrixModelView * vec4(aVertex, 1.0);
-  gl_Position = pos;
 
-  vec4 lightdir = vec4(1.0, 0.5, 1.0, 0.0);
-  vec4 ambient = vec4(0.1, 0.1, 0.1, 0.5);
+vec3 color;
 
-  vec3 N = normalize(mat3(matrixModelView) * aNormal);
-  vec3 L = normalize(lightdir).xyz;
-  float NdotL = max(dot(N, L), 0.0);
-  color = vec4(material, 1) * (ambient + NdotL);
+};
+
+uniform AMBIENT lightAmbient;
+
+vec4 AmbientLight(AMBIENT light)
+
+{
+
+// Calculate Ambient Light
+
+return vec4(materialAmbient * light.color, 1);
+
+}
+void main(void)
+
+{
+
+// calculate position
+
+position = matrixModelView * vec4(aVertex, 1.0);
+gl_Position = matrixProjection * position;
+
+normal = normalize(mat3(matrixModelView) * aNormal);
+
+// calculate light
+
+color = vec4(0, 0, 0, 1);
+color += AmbientLight(lightAmbient);
 }

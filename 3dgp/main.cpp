@@ -151,8 +151,12 @@ bool init()
 	cout << "  Shift to speed up your movement" << endl;
 	cout << "  Drag the mouse to look around" << endl;
 	cout << endl;
+	// ambient lighting 
+	program.sendUniform("lightAmbient.color", vec3(0.1, 0.1, 0.1));
 
+	program.sendUniform("materialAmbient", vec3(1.0, 1.0, 1.0));
 	return true;
+	
 }
 
 void renderScene(mat4& matrixView, float time, float deltaTime)
