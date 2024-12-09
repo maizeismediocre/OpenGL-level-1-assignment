@@ -160,8 +160,13 @@ bool init()
 
 void renderScene(mat4& matrixView, float time, float deltaTime)
 {
+	program.sendUniform("matrixView", matrixView);
 	// ambient lighting 
 	program.sendUniform("lightAmbient.color", vec3(0.1, 0.1, 0.1));
+	// directional light
+	program.sendUniform("lightDir.direction", vec3(1.0, 0.5, 1.0));
+	program.sendUniform("lightDir.diffuse", vec3(0.5, 0.5, 0.5));
+	program.sendUniform("materialDiffuse", vec3(0.2, 0.2, 0.2));
 	mat4 m;
 	
 	
@@ -217,6 +222,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 
 	// set up materials brown
 	program.sendUniform("materialAmbient", vec3(0.6f, 0.3f, 0.1f));
+	program.sendUniform("materialDiffuse", vec3(0.2, 0.2, 0.6));
 	
 
 	
@@ -252,6 +258,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	chair.render(0, m);
 	// set up materials - blue
 	program.sendUniform("materialAmbient", vec3(0.1f, 0.1f, 0.6f));
+	program.sendUniform("materialDiffuse", vec3(0.2, 0.2, 0.6));
 	// teapot
 	m = matrixView;
 	m = translate(m, vec3(2.0f, 3.0f, 0.0f));
@@ -260,6 +267,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	teapot.render(m);
 	// set up materials - red 
 	program.sendUniform("materialAmbient", vec3(0.6f, 0.1f, 0.1f));
+	program.sendUniform("materialDiffuse", vec3(0.2, 0.2, 0.6));
 	// vase
 	m = matrixView;
 	m = translate(m, vec3(-2.0f, 3.0f, 0.0f));
@@ -274,6 +282,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	Figure.render(m);
 	//set up materials yellow 
 	program.sendUniform("materialAmbient", vec3(0.6f, 0.6f, 0.1f));
+	program.sendUniform("materialDiffuse", vec3(0.2, 0.2, 0.6));
 	// lamp
 
 	m = matrixView;
@@ -289,6 +298,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	lamp.render(m);
 
 	program.sendUniform("materialAmbient", vec3(0.1f, 0.6f, 0.1f));
+	program.sendUniform("materialDiffuse", vec3(0.2, 0.2, 0.6));
 	program.sendUniform("matrixModelView", matrixView);
 	
 
