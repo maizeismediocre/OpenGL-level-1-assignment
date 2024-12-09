@@ -52,6 +52,7 @@ C3dglModel chair;
 C3dglModel teapot;
 C3dglModel Vase;
 C3dglModel Figure; 
+C3dglModel lamp;	
 // The View Matrix
 mat4 matrixView;
 // GLSL programs
@@ -132,6 +133,7 @@ bool init()
 	if (!teapot.load("models\\utah_teapot_ultrares.obj")) return false;
 	if (!Vase.load("models\\vase.obj")) return false;
 	if (!Figure.load("models\\figure.fbx")) return false;
+	if (!lamp.load("models\\lamp.obj")) return false;
 	// Initialise the View Matrix (initial position of the camera)
 	matrixView = rotate(mat4(1), radians(12.f), vec3(1, 0, 0));
 	matrixView *= lookAt(
@@ -265,6 +267,22 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = rotate(m, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
 	m = scale(m, vec3(0.05f, 0.05f, 0.05f));
 	Figure.render(m);
+	//set up materials yellow 
+	program.sendUniform("material", vec3(0.6f, 0.6f, 0.1f));
+	// lamp
+
+	m = matrixView;
+	m = translate(m, vec3(1.0f, 3.05f, 0.0f));
+	m = rotate(m, radians(180.0f), vec3(0.0f, 1.0f, 0.0f));
+	m = scale(m, vec3(0.01f, 0.01f, 0.01f));
+	lamp.render(m);
+	//lamp 2
+	m = matrixView;
+	m = translate(m, vec3(-1.0f, 3.05f, 0.0f));
+	m = rotate(m, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
+	m = scale(m, vec3(0.01f, 0.01f, 0.01f));
+	lamp.render(m);
+
 	program.sendUniform("material", vec3(0.1f, 0.6f, 0.1f));
 	program.sendUniform("matrixModelView", matrixView);
 	
