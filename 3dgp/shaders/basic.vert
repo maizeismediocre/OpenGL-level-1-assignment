@@ -54,6 +54,37 @@ color += vec4(materialDiffuse * light.diffuse, 1) * max(NdotL, 0);
 return color;
 
 }
+struct POINT
+{
+vec3 position;
+vec3 diffuse;
+vec3 specular;
+};
+uniform POINT lightPoint;
+
+vec4 PointLight(POINT light)
+{
+// Calculate Point Light
+
+vec4 color = vec4(0, 0, 0, 0);
+
+    vec4 lightPos = vec4(light.position, 1.0);
+
+
+    vec4 transformedLightPos = matrixView * lightPos;
+
+   
+    vec3 L = normalize((transformedLightPos - position).xyz);
+
+    
+    float NdotL = dot(normal, L);
+
+   
+    color += vec4(materialDiffuse * light.diffuse, 1) * max(NdotL, 0);
+
+
+    return color;
+}
 void main(void) 
 {
     // calculate position
@@ -66,4 +97,5 @@ void main(void)
     color = vec4(0, 0, 0, 1);
     color += AmbientLight(lightAmbient);
     color += DirectionalLight(lightDir);
+    color += PointLight(lightPoint);
 }
