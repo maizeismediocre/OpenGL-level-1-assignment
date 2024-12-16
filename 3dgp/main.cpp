@@ -63,7 +63,8 @@ float maxspeed = 4.f;	// camera max speed
 float accel = 4.f;		// camera acceleration
 vec3 _acc(0), _vel(0);	// camera acceleration and velocity vectors
 float _fov = 60.f;		// field of view (zoom)
-
+bool isLamp1on = false;	// light on/off switch
+bool isLamp2on = false;	// light on/off switch
 bool init()
 {
 	C3dglShader vertexShader;
@@ -164,30 +165,48 @@ bool init()
 
 void renderScene(mat4& matrixView, float time, float deltaTime)
 {
-	
+
 
 
 	mat4 m;
-	
-	
-	// ambient lighting 
-	program.sendUniform("lightAmbient.color", vec3(0.1, 0.1, 0.1));
-	// directional light
-	//program.sendUniform("lightDir.direction", vec3(1.0, 0.5, 1.0));
-	//program.sendUniform("lightDir.diffuse", vec3(0.2, 0.2, 0.2));
 
-	// point light 1
+
+	// ambient lighting 
+	program.sendUniform("lightAmbient1.color", vec3(0.1, 0.1, 0.1));
+	
+	// directional light
+	program.sendUniform("lightDir.direction", vec3(1.0, 0.5, 1.0));
+	program.sendUniform("lightDir.diffuse", vec3(0.5, 0.5, 0.5));
+
+	// point light (not specular) 1
+	if (isLamp1on == true)
+	{
 
 	program.sendUniform("lightPoint1.diffuse", vec3(1.0, 1.0, 1.0));
-	program.sendUniform("lightPoint1.specular", vec3(1.0, 1.0, 1.0));
-	program.sendUniform("lightPoint1.position", vec3(1.37f, 3.63f, 0.0f));
-
-	// point light 2
 	
-	program.sendUniform("lightPoint2.diffuse", vec3(1.0, 1.0, 1.0));
-	program.sendUniform("lightPoint2.specular", vec3(1.0, 1.0, 1.0));
-	program.sendUniform("lightPoint2.position", vec3(-1.37f, 3.63f, 0.0f));
+	program.sendUniform("lightPoint1.position", vec3(1.37f, 3.63f, 0.0f));
+	}
+	else
+	{
+		program.sendUniform("lightPoint1.diffuse", vec3(0.0, 0.0, 0.0));
+		
+		program.sendUniform("lightPoint1.position", vec3(1.37f, 3.63f, 0.0f));
 
+}
+
+	// point light 2 (specular)
+	if (isLamp2on == true)
+	{
+		program.sendUniform("lightPoint2.diffuse", vec3(1.0, 1.0, 1.0));
+		program.sendUniform("lightPoint2.specular", vec3(1.0, 1.0, 1.0));
+		program.sendUniform("lightPoint2.position", vec3(-1.37f, 3.63f, 0.0f));
+	}
+	else
+	{
+		program.sendUniform("lightPoint2.diffuse", vec3(0.0, 0.0, 0.0));
+		program.sendUniform("lightPoint2.specular", vec3(0.0, 0.0, 0.0));
+		program.sendUniform("lightPoint2.position", vec3(-1.37f, 3.63f, 0.0f));
+	}
 	// set up materials green
 	program.sendUniform("materialAmbient", vec3(0.1f, 0.6f, 0.1f));
 	program.sendUniform("materialDiffuse", vec3(0.1f, 0.6f, 0.1f));
@@ -335,17 +354,48 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = scale(m, vec3(0.01f, 0.01f, 0.01f));
 	program.sendUniform("matrixView", matrixView);
 	lamp.render(m);
-	// set up materials white
-	program.sendUniform("materialAmbient", vec3(0.6f, 0.6f, 0.6f));
-	program.sendUniform("materialDiffuse", vec3(0.6f, 0.6f, 0.6f));
-	program.sendUniform("materialSpecular", vec3(1.0f, 1.0f, 1.0f));
-	program.sendUniform("shininess", 100.0f);
+	// set up materials white bulb 1
+	if (isLamp1on == true)
+
+	{
+		program.sendUniform("materialAmbient", vec3(1.0f, 1.0f, 1.0f));
+		program.sendUniform("materialDiffuse", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("shininess", 100.0f);
+		program.sendUniform("lightAmbient2.color", vec3(1.0, 1.0, 1.0));
+	}
+	else
+	{
+		program.sendUniform("materialAmbient", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("materialDiffuse", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("shininess", 100.0f);
+	}
 	// light bulb 1
 	m = matrixView;
 	m = translate(m, vec3(1.37f, 3.63f, 0.0f));
 	m = scale(m, vec3(0.05f, 0.05f, 0.05f));
 	program.sendUniform("matrixModelView", m);
 	glutSolidSphere(1, 32, 32);
+	if (isLamp2on)
+	{
+		program.sendUniform("materialAmbient", vec3(1.0f, 1.0f, 1.0f));
+		program.sendUniform("materialDiffuse", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("shininess", 100.0f);
+		program.sendUniform("lightAmbient2.color", vec3(1.0, 1.0, 1.0));
+
+	}
+	else
+	{
+		program.sendUniform("materialAmbient", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("materialDiffuse", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("shininess", 100.0f);
+		
+	}
+	
+
 	// light bulb 2
 	m = matrixView;
 	m = translate(m, vec3(-1.37f, 3.63f, 0.0f));
@@ -353,6 +403,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	program.sendUniform("matrixModelView", m);
 	glutSolidSphere(1, 32, 32);
 
+
+	program.sendUniform("lightAmbient2.color", vec3(0.0, 0.0, 0.0));
 
 }
 
@@ -409,6 +461,8 @@ void onKeyDown(unsigned char key, int x, int y)
 	case 'd': _acc.x = -accel; break;
 	case 'e': _acc.y = accel; break;
 	case 'q': _acc.y = -accel; break;
+	case '1': isLamp1on = !isLamp1on; break;
+	case '2': isLamp2on = !isLamp2on; break;
 	}
 }
 

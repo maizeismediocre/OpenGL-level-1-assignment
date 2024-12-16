@@ -27,7 +27,7 @@ struct AMBIENT
     vec3 color;
 };
 
-uniform AMBIENT lightAmbient;
+uniform AMBIENT lightAmbient1, lightAmbient2;
 
 vec4 AmbientLight(AMBIENT light) 
 {
@@ -98,7 +98,8 @@ void main(void)
 
     // calculate light
     color = vec4(0, 0, 0, 1);
-    color += AmbientLight(lightAmbient);
+    color += AmbientLight(lightAmbient1);
+    color += AmbientLight(lightAmbient2);
     color += DirectionalLight(lightDir);
     color += PointLight(lightPoint1);
     color += PointLight(lightPoint2);
