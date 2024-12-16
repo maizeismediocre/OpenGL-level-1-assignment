@@ -60,7 +60,7 @@ vec3 position;
 vec3 diffuse;
 vec3 specular;
 };
-uniform POINT lightPoint;
+uniform POINT lightPoint1 , lightPoint2;
 
 vec4 PointLight(POINT light)
 {
@@ -100,5 +100,6 @@ void main(void)
     color = vec4(0, 0, 0, 1);
     color += AmbientLight(lightAmbient);
     color += DirectionalLight(lightDir);
-    color += PointLight(lightPoint);
+    color += PointLight(lightPoint1);
+    color += PointLight(lightPoint2);
 }

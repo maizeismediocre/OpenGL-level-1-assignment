@@ -154,7 +154,9 @@ bool init()
 	cout << "  Drag the mouse to look around" << endl;
 	cout << endl;
 	
+	glutSetVertexAttribCoord3(program.getAttribLocation("aVertex"));
 
+	glutSetVertexAttribNormal(program.getAttribLocation("aNormal"));
 	
 	return true;
 	
@@ -172,14 +174,19 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	program.sendUniform("lightAmbient.color", vec3(0.1, 0.1, 0.1));
 	// directional light
 	//program.sendUniform("lightDir.direction", vec3(1.0, 0.5, 1.0));
-	//program.sendUniform("lightDir.diffuse", vec3(0.5, 0.5, 0.5));
+	//program.sendUniform("lightDir.diffuse", vec3(0.2, 0.2, 0.2));
 
-	// point light 
+	// point light 1
 
-	program.sendUniform("lightPoint.diffuse", vec3(3.5, 3.5, 3.5));
-	program.sendUniform("lightPoint.specular", vec3(1.0, 1.0, 1.0));
-	program.sendUniform("lightPoint.position", vec3(-1.37f, 4.64f, 0.0f));
+	program.sendUniform("lightPoint1.diffuse", vec3(1.0, 1.0, 1.0));
+	program.sendUniform("lightPoint1.specular", vec3(1.0, 1.0, 1.0));
+	program.sendUniform("lightPoint1.position", vec3(1.37f, 3.63f, 0.0f));
 
+	// point light 2
+	
+	program.sendUniform("lightPoint2.diffuse", vec3(1.0, 1.0, 1.0));
+	program.sendUniform("lightPoint2.specular", vec3(1.0, 1.0, 1.0));
+	program.sendUniform("lightPoint2.position", vec3(-1.37f, 3.63f, 0.0f));
 
 	// set up materials green
 	program.sendUniform("materialAmbient", vec3(0.1f, 0.6f, 0.1f));
@@ -333,8 +340,19 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	program.sendUniform("materialDiffuse", vec3(0.6f, 0.6f, 0.6f));
 	program.sendUniform("materialSpecular", vec3(1.0f, 1.0f, 1.0f));
 	program.sendUniform("shininess", 100.0f);
+	// light bulb 1
+	m = matrixView;
+	m = translate(m, vec3(1.37f, 3.63f, 0.0f));
+	m = scale(m, vec3(0.05f, 0.05f, 0.05f));
+	program.sendUniform("matrixModelView", m);
+	glutSolidSphere(1, 32, 32);
+	// light bulb 2
+	m = matrixView;
+	m = translate(m, vec3(-1.37f, 3.63f, 0.0f));
+	m = scale(m, vec3(0.05f, 0.05f, 0.05f));
+	program.sendUniform("matrixModelView", m);
+	glutSolidSphere(1, 32, 32);
 
-	
 
 }
 
