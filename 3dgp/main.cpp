@@ -366,10 +366,12 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	}
 	else
 	{
-		program.sendUniform("materialAmbient", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("materialAmbient", vec3(0.5f, 0.5f, 0.5f));
 		program.sendUniform("materialDiffuse", vec3(0.0f, 0.0f, 0.0f));
 		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
 		program.sendUniform("shininess", 100.0f);
+		program.sendUniform("lightAmbient2.color", vec3(0.0, 0.0, 0.0));
+
 	}
 	// light bulb 1
 	m = matrixView;
@@ -388,11 +390,11 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	}
 	else
 	{
-		program.sendUniform("materialAmbient", vec3(0.0f, 0.0f, 0.0f));
+		program.sendUniform("materialAmbient", vec3(0.5f, 0.5f, 0.5f));
 		program.sendUniform("materialDiffuse", vec3(0.0f, 0.0f, 0.0f));
 		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
 		program.sendUniform("shininess", 100.0f);
-		
+		program.sendUniform("lightAmbient2.color", vec3(0.0, 0.0, 0.0));
 	}
 	
 
