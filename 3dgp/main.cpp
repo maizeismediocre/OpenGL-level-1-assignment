@@ -170,7 +170,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	// point light
 	program.sendUniform("lightPoint.position", vec3(1.1, 4.3, 1.0));
 	program.sendUniform("lightPoint.diffuse", vec3(1, 1, 1));
-	program.sendUniform("materialDiffuse", vec3(0.5, 0.5, 0.5));
+	
 
 	mat4 m;
 	
@@ -226,8 +226,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	glDisableVertexAttribArray(attribNormal);
 
 	// set up materials brown
-	program.sendUniform("materialAmbient", vec3(0.6f, 0.3f, 0.1f));
 	
+	program.sendUniform("materialDiffuse", vec3(0.6f, 0.3f, 0.1f));
 	
 
 	
@@ -262,8 +262,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = scale(m, vec3(0.004f, 0.004f, 0.004f));
 	chair.render(0, m);
 	// set up materials - blue
-	program.sendUniform("materialAmbient", vec3(0.1f, 0.1f, 0.6f));
 	
+	program.sendUniform("materialDiffuse", vec3(0.1f, 0.1f, 0.6f));
 	// teapot
 	m = matrixView;
 	m = translate(m, vec3(2.0f, 3.0f, 0.0f));
@@ -271,8 +271,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = scale(m, vec3(0.5f, 0.5f, 0.5f));
 	teapot.render(m);
 	// set up materials - red 
-	program.sendUniform("materialAmbient", vec3(0.6f, 0.1f, 0.1f));
 	
+	program.sendUniform("materialDiffuse", vec3(0.6f, 0.1f, 0.1f));
 	// vase
 	m = matrixView;
 	m = translate(m, vec3(-2.0f, 3.0f, 0.0f));
@@ -286,8 +286,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = scale(m, vec3(0.05f, 0.05f, 0.05f));
 	Figure.render(m);
 	//set up materials yellow 
-	program.sendUniform("materialAmbient", vec3(0.6f, 0.6f, 0.1f));
 	
+	program.sendUniform("materialDiffuse", vec3(0.6f, 0.6f, 0.1f));
 	// lamp
 
 	m = matrixView;
@@ -302,8 +302,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = scale(m, vec3(0.01f, 0.01f, 0.01f));
 	lamp.render(m);
 
-	program.sendUniform("materialAmbient", vec3(0.1f, 0.6f, 0.1f));
 	
+	program.sendUniform("materialDiffuse", vec3(0.1f, 0.6f, 0.1f));
 	program.sendUniform("matrixModelView", matrixView);
 	
 
