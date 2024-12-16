@@ -53,6 +53,7 @@ C3dglModel teapot;
 C3dglModel Vase;
 C3dglModel Figure; 
 C3dglModel lamp;	
+
 // The View Matrix
 mat4 matrixView;
 // GLSL programs
@@ -134,6 +135,7 @@ bool init()
 	if (!Vase.load("models\\vase.obj")) return false;
 	if (!Figure.load("models\\figure.fbx")) return false;
 	if (!lamp.load("models\\lamp.obj")) return false;
+	
 	// Initialise the View Matrix (initial position of the camera)
 	matrixView = rotate(mat4(1), radians(12.f), vec3(1, 0, 0));
 	matrixView *= lookAt(
@@ -174,9 +176,9 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 
 	// point light 
 
-	program.sendUniform("lightPoint.diffuse", vec3(1.5, 1.5, 1.5));
+	program.sendUniform("lightPoint.diffuse", vec3(3.5, 3.5, 3.5));
 	program.sendUniform("lightPoint.specular", vec3(1.0, 1.0, 1.0));
-	program.sendUniform("lightPoint.position", vec3(1.0f, 7.05f, 0.0f));
+	program.sendUniform("lightPoint.position", vec3(-1.37f, 4.64f, 0.0f));
 
 
 	// set up materials green
@@ -247,6 +249,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = scale(m, vec3(0.004f, 0.004f, 0.004f));
 	program.sendUniform("matrixView", matrixView);
 	table.render(m);
+
 
 	
 
@@ -325,20 +328,12 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = scale(m, vec3(0.01f, 0.01f, 0.01f));
 	program.sendUniform("matrixView", matrixView);
 	lamp.render(m);
-	// set up materials - red
-	program.sendUniform("materialAmbient", vec3(0.6f, 0.1f, 0.1f));
-	program.sendUniform("materialDiffuse", vec3(0.6f, 0.1f, 0.1f));
+	// set up materials white
+	program.sendUniform("materialAmbient", vec3(0.6f, 0.6f, 0.6f));
+	program.sendUniform("materialDiffuse", vec3(0.6f, 0.6f, 0.6f));
 	program.sendUniform("materialSpecular", vec3(1.0f, 1.0f, 1.0f));
 	program.sendUniform("shininess", 100.0f);
-	m = matrixView;
 
-	m = translate(m, vec3(-2.95f, 4.24f, -1.0f));
-
-	m = scale(m, vec3(0.1f, 0.1f, 0.1f));
-
-	program.sendUniform("matrixModelView", m);
-
-	
 	
 
 }
