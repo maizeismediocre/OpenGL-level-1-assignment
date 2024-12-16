@@ -169,14 +169,14 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	// ambient lighting 
 	program.sendUniform("lightAmbient.color", vec3(0.1, 0.1, 0.1));
 	// directional light
-	program.sendUniform("lightDir.direction", vec3(1.0, 0.5, 1.0));
-	program.sendUniform("lightDir.diffuse", vec3(0.5, 0.5, 0.5));
+	//program.sendUniform("lightDir.direction", vec3(1.0, 0.5, 1.0));
+	//program.sendUniform("lightDir.diffuse", vec3(0.5, 0.5, 0.5));
 
-	// point light
+	// point light 
 
-	program.sendUniform("lightPoint.diffuse", vec3(10.0, 10.0, 10.0));
+	program.sendUniform("lightPoint.diffuse", vec3(1.5, 1.5, 1.5));
 	program.sendUniform("lightPoint.specular", vec3(1.0, 1.0, 1.0));
-	program.sendUniform("lightPoint.position", vec3(-2.95, 4.24, -1.0));
+	program.sendUniform("lightPoint.position", vec3(1.0f, 7.05f, 0.0f));
 
 
 	// set up materials green
@@ -316,9 +316,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = rotate(m, radians(180.0f), vec3(0.0f, 1.0f, 0.0f));
 	m = scale(m, vec3(0.01f, 0.01f, 0.01f));
 	program.sendUniform("matrixView", matrixView);
-	lamp.render(0,m);
-	lamp.render(2, m);
-	lamp.render(3,m);
+	lamp.render(m);
 	
 	//lamp 2
 	m = matrixView;
@@ -326,30 +324,20 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = rotate(m, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
 	m = scale(m, vec3(0.01f, 0.01f, 0.01f));
 	program.sendUniform("matrixView", matrixView);
-	lamp.render(0,m);
-	lamp.render(2, m);
-	lamp.render(3, m);
+	lamp.render(m);
 	// set up materials - red
 	program.sendUniform("materialAmbient", vec3(0.6f, 0.1f, 0.1f));
 	program.sendUniform("materialDiffuse", vec3(0.6f, 0.1f, 0.1f));
 	program.sendUniform("materialSpecular", vec3(1.0f, 1.0f, 1.0f));
 	program.sendUniform("shininess", 100.0f);
-	//bulb 1
 	m = matrixView;
-	m = translate(m, vec3(1.0f, 3.05f, 0.0f));
-	m = rotate(m, radians(180.0f), vec3(0.0f, 1.0f, 0.0f));
-	m = scale(m, vec3(0.01f, 0.01f, 0.01f));
-	program.sendUniform("matrixView", matrixView);
-	lamp.render(1, m);
 
-	//bulb 2
+	m = translate(m, vec3(-2.95f, 4.24f, -1.0f));
 
-	m = matrixView;
-	m = translate(m, vec3(-1.0f, 3.05f, 0.0f));
-	m = rotate(m, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
-	m = scale(m, vec3(0.01f, 0.01f, 0.01f));
-	program.sendUniform("matrixView", matrixView);
-	lamp.render(1, m);
+	m = scale(m, vec3(0.1f, 0.1f, 0.1f));
+
+	program.sendUniform("matrixModelView", m);
+
 	
 	
 
