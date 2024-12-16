@@ -170,6 +170,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	// point light
 	program.sendUniform("lightPoint.position", vec3(1.1, 4.3, 1.0));
 	program.sendUniform("lightPoint.diffuse", vec3(1, 1, 1));
+	program.sendUniform("lightPoint.specular", vec3(1.0, 1.0, 1.0));
 	
 
 	mat4 m;
@@ -228,8 +229,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	// set up materials brown
 	
 	program.sendUniform("materialDiffuse", vec3(0.6f, 0.3f, 0.1f));
-	
-
+	program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
+	program.sendUniform("shininess", 1.0f);
 	
 	
 	// table
@@ -264,6 +265,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	// set up materials - blue
 	
 	program.sendUniform("materialDiffuse", vec3(0.1f, 0.1f, 0.6f));
+	program.sendUniform("materialSpecular", vec3(0.1f, 0.1f, 0.6f));
+	program.sendUniform("shininess", 10.0f);
 	// teapot
 	m = matrixView;
 	m = translate(m, vec3(2.0f, 3.0f, 0.0f));
@@ -273,6 +276,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	// set up materials - red 
 	
 	program.sendUniform("materialDiffuse", vec3(0.6f, 0.1f, 0.1f));
+	program.sendUniform("materialSpecular", vec3(0.6f, 0.1f, 0.1f));
+	program.sendUniform("shininess", 100.0f);
 	// vase
 	m = matrixView;
 	m = translate(m, vec3(-2.0f, 3.0f, 0.0f));
@@ -288,6 +293,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	//set up materials yellow 
 	
 	program.sendUniform("materialDiffuse", vec3(0.6f, 0.6f, 0.1f));
+	program.sendUniform("materialSpecular", vec3(0.6f, 0.6f, 0.1f));
+	program.sendUniform("shininess", 100.0f);
 	// lamp
 
 	m = matrixView;
@@ -304,7 +311,8 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 
 	
 	program.sendUniform("materialDiffuse", vec3(0.1f, 0.6f, 0.1f));
-	program.sendUniform("matrixModelView", matrixView);
+	program.sendUniform("materialSpecular", vec3(0.1f, 0.6f, 0.1f));
+	program.sendUniform("shininess", 100.0f);
 	
 
 }

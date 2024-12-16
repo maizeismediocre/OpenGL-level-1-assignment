@@ -82,7 +82,10 @@ vec4 color = vec4(0, 0, 0, 0);
    
     color += vec4(materialDiffuse * light.diffuse, 1) * max(NdotL, 0);
 
-
+    vec3 V = normalize(-position.xyz);
+    vec3 R = reflect(-L, normal);
+    float RdotV = dot(R, V);
+    color += vec4(materialSpecular * light.specular * pow(max(RdotV, 0), shininess), 1);
     return color;
 }
 void main(void) 
