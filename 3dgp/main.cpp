@@ -202,7 +202,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	
 	// directional light
 	program.sendUniform("lightDir.direction", vec3(1.0, 0.5, 1.0));
-	program.sendUniform("lightDir.diffuse", vec3(0.5, 0.5, 0.5));
+	program.sendUniform("lightDir.diffuse", vec3(0.7, 0.7, 0.7));
 
 	// point light (not specular) 1
 	if (isLamp1on == true)
