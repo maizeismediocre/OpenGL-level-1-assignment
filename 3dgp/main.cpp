@@ -346,6 +346,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	program.sendUniform("materialDiffuse", vec3(0.6f, 0.1f, 0.1f));
 	program.sendUniform("materialSpecular", vec3(1.0f, 1.0f, 1.0f));
 	program.sendUniform("shininess", 100.0f);
+	glBindTexture(GL_TEXTURE_2D, idTexNone);
 	// vase
 	m = matrixView;
 	m = translate(m, vec3(-2.0f, 3.0f, 0.0f));
@@ -365,6 +366,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	program.sendUniform("materialDiffuse", vec3(0.6f, 0.6f, 0.1f));
 	program.sendUniform("materialSpecular", vec3(1.0f, 1.0f, 1.0f));
 	program.sendUniform("shininess", 100.0f);
+	glBindTexture(GL_TEXTURE_2D, idTexNone);
 	// lamp
 
 	m = matrixView;
@@ -390,6 +392,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
 		program.sendUniform("shininess", 100.0f);
 		program.sendUniform("lightAmbient2.color", vec3(1.0, 1.0, 1.0));
+		glBindTexture(GL_TEXTURE_2D, idTexNone);
 	}
 	else
 	{
@@ -398,6 +401,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
 		program.sendUniform("shininess", 100.0f);
 		program.sendUniform("lightAmbient2.color", vec3(0.0, 0.0, 0.0));
+		glBindTexture(GL_TEXTURE_2D, idTexNone);
 
 	}
 	// light bulb 1
@@ -413,6 +417,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
 		program.sendUniform("shininess", 100.0f);
 		program.sendUniform("lightAmbient2.color", vec3(1.0, 1.0, 1.0));
+		glBindTexture(GL_TEXTURE_2D, idTexNone);
 
 	}
 	else
@@ -422,6 +427,7 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 		program.sendUniform("materialSpecular", vec3(0.0f, 0.0f, 0.0f));
 		program.sendUniform("shininess", 100.0f);
 		program.sendUniform("lightAmbient2.color", vec3(0.0, 0.0, 0.0));
+		glBindTexture(GL_TEXTURE_2D, idTexNone);
 	}
 	
 
