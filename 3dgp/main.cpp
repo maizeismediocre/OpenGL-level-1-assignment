@@ -56,6 +56,7 @@ C3dglModel lamp;
 // textrue
 C3dglBitmap bm;
 GLuint idTexWood;
+GLuint idTexCloth;
 GLuint idTexNone;
 // The View Matrix
 mat4 matrixView;
@@ -142,12 +143,20 @@ bool init()
 	// load your textures here!
 	bm.load("models/oak.bmp", GL_RGBA);
 	if (!bm.getBits()) return false;
+	bm.load("models/cloth.bmp", GL_RGBA);
+	if (!bm.getBits()) return false;
 	// prepare the texture oak 
 	glActiveTexture(GL_TEXTURE0);
 	glGenTextures(1, &idTexWood);
 	glBindTexture(GL_TEXTURE_2D, idTexWood);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bm.getWidth(), bm.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, bm.getBits());
+	// prepare the texture cloth
+	glGenTextures(1, &idTexCloth);
+	glBindTexture(GL_TEXTURE_2D, idTexCloth);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bm.getWidth(), bm.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, bm.getBits());
+
 	//prepare the null texture
 	// none (simple-white) texture
 
@@ -300,28 +309,40 @@ void renderScene(mat4& matrixView, float time, float deltaTime)
 	m = rotate(m, radians(180.f), vec3(0.0f, 1.0f, 0.0f));
 	m = scale(m, vec3(0.004f, 0.004f, 0.004f));
 	
-	table.render(m);
+	table.render(1, m);
 
 
-	
-
-
-
+	// set up materials white 
+	program.sendUniform("materialAmbient", vec3(0.6f, 0.6f, 0.6f));
+	program.sendUniform("materialDiffuse", vec3(0.6f, 0.6f, 0.6f));
+	program.sendUniform("materialSpecular", vec3(1.0f, 1.0f, 1.0f));
+	program.sendUniform("shininess", 100.0f);
+	glBindTexture(GL_TEXTURE_2D, idTexCloth);
 	// chair 1
+	m = matrixView;
+	m = translate(m, vec3(0.0f, 0, 0.0f));
+	m = rotate(m, radians(180.f), vec3(0.0f, 1.0f, 0.0f));
+	m = scale(m, vec3(0.004f, 0.004f, 0.004f));
+
+	table.render(0, m);
+
+
+
+	// chair 2
 	m = matrixView;
 	m = translate(m, vec3(0.0f, 0, 0.0f));
 	m = rotate(m, radians(0.0f), vec3(0.0f, 1.0f, 0.0f));
 	m = scale(m, vec3(0.004f, 0.004f, 0.004f));
 	
 	chair.render(0, m);
-	// chair 2
+	// chair 3
 	m = matrixView;
 	m = translate(m, vec3(0.0f, 0, 0.0f));
 	m = rotate(m, radians(90.0f), vec3(0.0f, 1.0f, 0.0f));
 	m = scale(m, vec3(0.004f, 0.004f, 0.004f));
 	
 	chair.render(0, m);
-	// chair 3
+	// chair 4
 	m = matrixView;
 	m = translate(m, vec3(0.0f, 0, 0.0f));
 	m = rotate(m, radians(270.0f), vec3(0.0f, 1.0f, 0.0f));
