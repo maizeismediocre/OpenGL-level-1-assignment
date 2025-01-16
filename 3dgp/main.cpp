@@ -55,6 +55,7 @@ C3dglModel Figure;
 C3dglModel lamp;	
 // textrue
 C3dglBitmap bm;
+C3dglBitmap oak;
 GLuint idTexWood;
 GLuint idTexCloth;
 GLuint idTexNone;
@@ -141,8 +142,8 @@ bool init()
 	if (!Figure.load("models\\figure.fbx")) return false;
 	if (!lamp.load("models\\lamp.obj")) return false;
 	// load your textures here!
-	bm.load("models/oak.bmp", GL_RGBA);
-	if (!bm.getBits()) return false;
+	oak.load("models/oak.bmp", GL_RGBA);
+	if (!oak.getBits()) return false;
 	bm.load("models/cloth.bmp", GL_RGBA);
 	if (!bm.getBits()) return false;
 	// prepare the texture oak 
@@ -150,7 +151,7 @@ bool init()
 	glGenTextures(1, &idTexWood);
 	glBindTexture(GL_TEXTURE_2D, idTexWood);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, bm.getWidth(), bm.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, bm.getBits());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, oak.getWidth(), oak.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, oak.getBits());
 	// prepare the texture cloth
 	glGenTextures(1, &idTexCloth);
 	glBindTexture(GL_TEXTURE_2D, idTexCloth);
